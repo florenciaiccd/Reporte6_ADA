@@ -1,0 +1,25 @@
+n = int(input())
+s = input()
+
+memo = [[-1] * n for x in range(n)]
+
+def dp(i, j):
+    if i > j:                 
+        return 0
+    if i == j:                
+        return 1
+    if memo[i][j] != -1:       
+        return memo[i][j]
+
+    mejor = 1 + dp(i + 1, j)   
+
+    for k in range(i + 1, j + 1):
+        if s[k] == s[i]:       
+            costo = dp(i + 1, k - 1) + dp(k, j)
+            if costo < mejor:
+                mejor = costo
+
+    memo[i][j] = mejor
+    return mejor
+
+print(dp(0, n - 1))
